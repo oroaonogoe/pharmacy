@@ -22,7 +22,7 @@ public class Tag {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     @JsonBackReference(value = "category-tag")
     private Category category;
 

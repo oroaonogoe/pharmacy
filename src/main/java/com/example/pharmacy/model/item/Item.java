@@ -27,7 +27,7 @@ public class Item {
     private String expiredOn;
     private String pharma;
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     @JsonBackReference(value = "category-item")
     private Category category;
     @ManyToMany(cascade = CascadeType.ALL)
