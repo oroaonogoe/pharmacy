@@ -1,11 +1,13 @@
 package com.example.pharmacy.model.user;
 
+import com.example.pharmacy.model.order.Order;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class User {
@@ -41,6 +43,10 @@ public class User {
     @JoinColumn(name = "profile_id", referencedColumnName = "profile_id")
     @JsonManagedReference
     private Profile profile;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonManagedReference(value = "order-user")
+    private List<Order> orders;
 
     public User() {
     }
@@ -91,5 +97,13 @@ public class User {
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

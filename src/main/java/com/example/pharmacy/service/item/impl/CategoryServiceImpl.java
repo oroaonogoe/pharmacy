@@ -33,15 +33,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public ResponseEntity<List<Category>> getAllCategories(String uuid) {
         try {
-            List<Category> categoryId = new ArrayList<>();
+            List<Category> categories = new ArrayList<>();
             if (uuid == null) {
-                categoryId.addAll(categoryRepository.findAll());
+                categories.addAll(categoryRepository.findAll());
             } else {
                 categoryRepository.findById(uuid);
             }
-            if (categoryId.isEmpty())
-                return new ResponseEntity<>(categoryId, HttpStatus.NOT_FOUND); //404
-            return new ResponseEntity<>(categoryId, HttpStatus.OK);
+            if (categories.isEmpty())
+                return new ResponseEntity<>(categories, HttpStatus.NOT_FOUND); //404
+            return new ResponseEntity<>(categories, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -75,7 +75,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ResponseEntity<Category> deleteCategory(String uuid) {
-        categoryRepository.deleteById(uuid);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204
+        try {
+            categoryRepository.deleteById(uuid);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

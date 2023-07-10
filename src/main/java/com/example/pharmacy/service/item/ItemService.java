@@ -13,6 +13,5 @@ public interface ItemService {
 
     public ResponseEntity<Item> getOneItem(String uuid);
     public ResponseEntity<Item> updateItem(Item item, String uuid);
-
     public ResponseEntity<Item> deleteItem(String uuid);
 }

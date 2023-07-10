@@ -1,5 +1,6 @@
 package com.example.pharmacy.model.item;
 
+import com.example.pharmacy.model.order.Order;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -26,7 +27,7 @@ public class Item {
     private String expiredOn;
     private String pharma;
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id")
     @JsonBackReference(value = "category-item")
     private Category category;
     @ManyToMany(cascade = CascadeType.ALL)
@@ -37,6 +38,10 @@ public class Item {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
     @JsonManagedReference(value = "desc")
     private List<Description> descriptions;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
+    @JsonManagedReference(value = "order-item")
+    private List<Order> orders;
 
     public Item() {
     }
@@ -127,5 +132,13 @@ public class Item {
 
     public void setDescriptions(List<Description> descriptions) {
         this.descriptions = descriptions;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

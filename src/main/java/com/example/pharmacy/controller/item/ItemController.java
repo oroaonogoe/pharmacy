@@ -11,7 +11,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/api/item")
 public class ItemController {
-    private ItemService itemService;
+    private final ItemService itemService;
 
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
