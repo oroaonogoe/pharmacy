@@ -32,7 +32,7 @@ public class Profile {
     private LocalDateTime updatedOn;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "profile")
-    @JsonBackReference
+    @JsonBackReference(value = "user-profile")
     private User user;
 
     public Profile() {

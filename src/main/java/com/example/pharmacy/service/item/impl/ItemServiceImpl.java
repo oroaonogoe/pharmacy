@@ -33,14 +33,12 @@ public class ItemServiceImpl implements ItemService {
     public ResponseEntity<List<Item>> listAll(String id) {
         try {
             List<Item> _item = new ArrayList<>();
-            if (id == null) {
+            if (id == null)
                 _item.addAll(itemRepository.findAll());
-            } else {
+            else
                 itemRepository.findById(id);
-            }
-            if (_item.isEmpty()) {
+            if (_item.isEmpty())
                 return new ResponseEntity<>(_item, HttpStatus.NOT_FOUND);
-            }
             return new ResponseEntity<>(_item, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

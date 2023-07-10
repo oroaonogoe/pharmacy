@@ -1,8 +1,11 @@
 package com.example.pharmacy.model.item;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
+
+import java.util.List;
 
 @Entity
 public class Description {
@@ -11,7 +14,9 @@ public class Description {
     @UuidGenerator(style = UuidGenerator.Style.TIME)
     private String id;
     private String title;
-    private String subtitle;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "description")
+    @JsonManagedReference(value = "sub-desc")
+    private List<SubDes> subtitle;
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     @JsonBackReference(value = "item_des")
@@ -36,11 +41,11 @@ public class Description {
         this.title = title;
     }
 
-    public String getSubtitle() {
+    public List<SubDes> getSubtitle() {
         return subtitle;
     }
 
-    public void setSubtitle(String subtitle) {
+    public void setSubtitle(List<SubDes> subtitle) {
         this.subtitle = subtitle;
     }
 

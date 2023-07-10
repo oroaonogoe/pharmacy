@@ -1,22 +1,16 @@
 package com.example.pharmacy.model.user;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.example.pharmacy.model.item.Item;
+import com.example.pharmacy.model.item.Order;
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 
 @Entity
 public class User {
@@ -50,8 +44,11 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id", referencedColumnName = "profile_id")
-    @JsonManagedReference
+    @JsonManagedReference(value = "user-profile")
     private Profile profile;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonManagedReference(value = "user-order")
+    private List<Order> order;
 
     // constructor with no arguments
     public User() {
@@ -65,6 +62,8 @@ public class User {
     // }
 
     // getter and setter for all variables
+
+
     public String getId() {
         return id;
     }
@@ -121,4 +120,11 @@ public class User {
         this.profile = profile;
     }
 
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
+    }
 }

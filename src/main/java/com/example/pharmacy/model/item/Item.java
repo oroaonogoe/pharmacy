@@ -37,6 +37,9 @@ public class Item {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
     @JsonManagedReference(value = "item_des")
     private List<Description> description;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
+    @JsonManagedReference(value = "order-item")
+    private List<Order> order;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -160,5 +163,13 @@ public class Item {
 
     public void setTag(List<Tag> tag) {
         this.tag = tag;
+    }
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
     }
 }
